@@ -17,6 +17,18 @@ def Play():
     guessed=False
     name=input("What is your name:")
     print("Today's contestant,",name," will be guessing the order of the assigned random word!")
+#Task 1:Have the user guess the letter for a certain # of turns
+#Curiousity:Why no while loop here?- Because we are applying that to the process of the letters printing out rather than guessing.
+    guess=input("\nLetter:")
+    Letters_guessed+=guess #We need to know what letter was exactly guessed at that time.This updates.
+    if guess in Chosen:
+        print(f"Correct!! The letter {guess} is in the word.Keep it up!")
+        amt_left -= Chosen.count(guess)
+    else:
+        Letters_guessed+=guess
+        chances-=1
+        print(f"The letter {guess} is not in the word.{chances} more chances left!")
+        Hangman_Guy(chances) #Print is redundant,as the function already prints.
 #Task 2:We need to output the exact word correctly when a user guesses the letters.
     while (chances > 0) and (guessed==False) and (amt_left>=0): #I initially had my own idea of doing it down there.Why is a while loop needed here?
         for l in Chosen: # Needed to loop through each letter in the Word;Thus,a for loop is important.
@@ -26,21 +38,6 @@ def Play():
             else:
                 print('_',end=' ') #We aim for our hidden mysteries to be '_'.
                 Incorrect.append(l) #Incorrect Add
-#Task 1:Have the user guess the letter for a certain # of turns
-#Curiousity:Why no while loop here?- Because we are applying that to the process of the letters printing out rather than guessing.
-        guess=input("\nLetter:")
-        Letters_guessed+=guess #We need to know what letter was exactly guessed at that time.This updates.
-        if guess in Chosen:
-            print(f"Correct!! The letter {guess} is in the word.Keep it up!")
-            amt_left -= Chosen.count(guess)
-        else:
-            Letters_guessed+=guess
-            chances-=1
-            print(f"The letter {guess} is not in the word.{chances} more chances left!")
-            Hangman_Guy(chances) #Print is redundant,as the function already prints.
-# Task 4:Guessed Variable switches to true
-        if amt_left == 0:
-            guessed = True
 #Task 3:The endings of a game.
     if chances==0 or amt_left!=0 or guessed==False:
         print(f'Sorry {name}, you did not guess the word.The word\'s {Chosen}.Better luck next time!')
@@ -49,6 +46,9 @@ def Play():
         print(f"Congratulations {name},you managed to solve the word with {chances} chances remaining.")
         Hangman_Guy(chances)
         print(Chosen)
+# Task 4:Guessed Variable switches to true
+        if amt_left == 0:
+            guessed = True
 def Credits():
     print("Creator credit goes to:Aravind Alwar and CMPSCI 132 colleague\n")
     print("Design:Aravind Alwar\n")
